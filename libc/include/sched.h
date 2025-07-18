@@ -28,6 +28,9 @@
 
 #pragma once
 
+#ifndef _SCHED_H_
+#define _SCHED_H_
+
 /**
  * @file sched.h
  * @brief Thread execution scheduling.
@@ -96,11 +99,12 @@ __BEGIN_DECLS
  * See sched_getparam()/sched_setparam() and
  * sched_getscheduler()/sched_setscheduler().
  */
-#ifndef __SCHED_PARAM_DEFINED
-#define __SCHED_PARAM_DEFINED
-#ifndef _LINUX_SCHED_TYPES_H
+#if defined(__ANDROID__) && !defined(_STRUCT_SCHED_PARAM_ANDROID_DEFINED)
+#define _STRUCT_SCHED_PARAM_ANDROID_DEFINED
+#ifndef _SCHED_PARAM_FALLBACK_DEFINED
+#define _SCHED_PARAM_FALLBACK_DEFINED
 struct sched_param {
-  int sched_priority;
+    int sched_priority;
 };
 #endif
 #endif
@@ -410,3 +414,4 @@ void __sched_cpufree(cpu_set_t* _Nonnull __set);
 #endif /* __USE_GNU */
 
 __END_DECLS
+#endif /* _SCHED_H_ */
